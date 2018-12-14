@@ -1,19 +1,28 @@
 # Uses python3
-import sys
 
-def get_fibonacci_huge_naive(n, m):
+def get_fibonacci_mod_m(n, m):
     if n <= 1:
         return n
 
-    previous = 0
-    current  = 1
+    fib_list = [0, 1]
+    fib_mod_m_list = [0, 1]
+    i = 2
 
-    for _ in range(n - 1):
-        previous, current = current, previous + current
+    while True:
+        if len(fib_mod_m_list) > 2 and fib_mod_m_list[-2:] == [0, 1]:
+            fib_mod_m_list = fib_mod_m_list[0 : -2]
+            break
+        elif (i - 1) == n:
+            return fib_mod_m_list[-1]
 
-    return current % m
+        next = fib_list[i - 1] + fib_list[i - 2]
+        fib_mod_m_list.append(next % m)
+        fib_list.append(next)
+        i += 1
+
+    remainder = n % len(fib_mod_m_list)
+    return fib_mod_m_list[remainder]
 
 if __name__ == '__main__':
-    input = sys.stdin.read();
-    n, m = map(int, input.split())
-    print(get_fibonacci_huge_naive(n, m))
+    n, m = map(int, input().split())
+    print(get_fibonacci_mod_m(n, m))
