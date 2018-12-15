@@ -1,20 +1,35 @@
 #python3
 import sys
 
+# reference: https://stackoverflow.com/questions/3435926/insert-delete-max-in-o1/25468684#25468684
+
 class StackWithMax():
     def __init__(self):
         self.__stack = []
+        self.__max = -1
 
     def Push(self, a):
-        self.__stack.append(a)
-
+        if len(self.__stack) == 0:
+            self.__max = a
+            self.__stack.append(a)
+        elif a < self.__max:
+            self.__stack.append(a)
+        else:
+            self.__stack.append(a + self.__max)
+            self.__max = a
+                
     def Pop(self):
         assert(len(self.__stack))
-        self.__stack.pop()
+        p = self.__stack.pop()
+        if abs(p) < abs(self.__max):
+            return p
+        else:
+            self.__max = p - self.__max
+            return self.__max
 
     def Max(self):
         assert(len(self.__stack))
-        return max(self.__stack)
+        return self.__max
 
 
 if __name__ == '__main__':
