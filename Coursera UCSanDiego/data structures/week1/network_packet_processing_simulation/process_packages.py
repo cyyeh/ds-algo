@@ -12,15 +12,31 @@ class Buffer:
         self.finish_time = []
 
     def process(self, request):
-        # write your code here
-        return Response(False, -1)
+        if not self.finish_time:
+            self.finish_time.append(request.arrived_at + request.time_to_process)
+            response = Response(False, request.arrived_at)
+        else:
+            for packet_finish_time in self.finish_time:
+                if packet_finish_time <= request.arrived_at:
+                    self.finish_time = self.finish_time[1:]
+                else:
+                    break
+
+            if len(self.finish_time) == self.size:
+                response = Response(True, -1)
+            else:
+                if self.finish_time:
+                    response = Response(False, self.finish_time[-1])
+                    self.finish_time.append(self.finish_time[-1] + request.time_to_process)
+                else:
+                    response = Response(False, request.arrived_at)
+                    self.finish_time.append(request.arrived_at + request.time_to_process)
+
+        return response
 
 
 def process_requests(requests, buffer):
-    responses = []
-    for request in requests:
-        responses.append(buffer.process(request))
-    return responses
+    return [buffer.process(request) for request in requests]
 
 
 def main():
