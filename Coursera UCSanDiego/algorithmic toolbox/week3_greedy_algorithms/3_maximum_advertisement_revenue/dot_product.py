@@ -3,10 +3,12 @@
 import sys
 
 def max_dot_product(a, b):
-    #write your code here
     res = 0
-    for i in range(len(a)):
-        res += a[i] * b[i]
+    a = sorted(a, reverse = True)
+    b = sorted(b, reverse = True)
+    for pair in zip(a, b):
+        res += pair[0] * pair[1]
+
     return res
 
 if __name__ == '__main__':
