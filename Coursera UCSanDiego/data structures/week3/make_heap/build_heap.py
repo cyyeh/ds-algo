@@ -23,11 +23,38 @@ class HeapBuilder:
     # but in the worst case gives a quadratic number of swaps.
     #
     # TODO: replace by a more efficient implementation
-    for i in range(len(self._data)):
-      for j in range(i + 1, len(self._data)):
-        if self._data[i] > self._data[j]:
-          self._swaps.append((i, j))
-          self._data[i], self._data[j] = self._data[j], self._data[i]
+    def _left_child(i):
+      return 2 * i + 1
+
+    def _right_child(i):
+      return 2 * i + 2
+
+    def _sift_down(i):
+      # choose the minimum child node to swap
+      min_index = i
+
+      left_child_index = _left_child(i)
+      if left_child_index < len(self._data) and self._data[left_child_index] < self._data[min_index]:
+        min_index = left_child_index
+
+      right_child_index = _right_child(i)
+      if right_child_index < len(self._data) and self._data[right_child_index] < self._data[min_index]:
+        min_index = right_child_index
+
+      # go down
+      if i != min_index:
+        # record swappings
+        self._swaps.append((i, min_index))
+        # swap and go down further
+        self._data[min_index], self._data[i] = self._data[i], self._data[min_index]
+        _sift_down(min_index)
+
+    def _build_heap(data):
+      for i in range(len(data)//2 - 1, -1, -1):
+        _sift_down(i)
+
+    _build_heap(self._data)
+    
 
   def Solve(self):
     self.ReadData()
