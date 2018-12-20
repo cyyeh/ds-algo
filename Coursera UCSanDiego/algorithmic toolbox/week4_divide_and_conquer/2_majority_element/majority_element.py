@@ -34,24 +34,7 @@ def get_majority_element(a, left, right):
 
     return get_majority_element_auxiliary(a, left, right)[0]
 
-def get_majority_element_linear_A(a, left, right):
-    elements_dict = {}
-    majority_threshold = len(a) // 2
-    result = -1  # -1: no majority, 0: majority
-
-    # record all elements into dictionary and test if it's the majority element
-    for element in a:
-        if elements_dict.get(element, -1) >= 0:
-            elements_dict[element] += 1
-            if elements_dict[element] > majority_threshold:
-                result = 0
-                break
-        else:
-            elements_dict[element] = 1
-    
-    return result
-
-def get_majority_element_linear_B(a, left, right):
+def get_majority_element_linear(a, left, right):
     elements_dict = {}
     majority_threshold = len(a) // 2
     result = -1  # -1: no majority, 0: majority
@@ -62,7 +45,7 @@ def get_majority_element_linear_B(a, left, right):
             elements_dict[element] += 1
         else:
             elements_dict[element] = 1
-    
+
     for element_value in elements_dict.values():
         if element_value > majority_threshold:
             result = 0
@@ -72,30 +55,9 @@ def get_majority_element_linear_B(a, left, right):
 
 
 if __name__ == '__main__':
-    #input = sys.stdin.read()
-    #n, *a = list(map(int, input.split()))
-    #if get_majority_element_linear_A(a, 0, n) != -1:
-    #    print(1)
-    #else:
-    #    print(0)
-    
-    import time, random
-
-    n = 10000000
-    a = [random.randint(1, n) for _ in range(n)]
-
-    start = time.time()
-    if get_majority_element_linear_A(a, 0, n) != -1:
+    input = sys.stdin.read()
+    n, *a = list(map(int, input.split()))
+    if get_majority_element_linear(a, 0, n) != -1:
         print(1)
     else:
         print(0)
-    end = time.time()
-    print(end - start)
-
-    start = time.time()
-    if get_majority_element_linear_B(a, 0, n) != -1:
-        print(1)
-    else:
-        print(0)
-    end = time.time()
-    print(end - start)
