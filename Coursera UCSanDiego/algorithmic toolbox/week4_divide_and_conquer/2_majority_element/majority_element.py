@@ -46,6 +46,7 @@ def get_majority_element_linear(a, left, right):
         else:
             elements_dict[element] = 1
 
+    print(len(elements_dict.keys()))
     for element_value in elements_dict.values():
         if element_value > majority_threshold:
             result = 0
@@ -57,6 +58,7 @@ def get_majority_element_linear(a, left, right):
 if __name__ == '__main__':
     input = sys.stdin.read()
     n, *a = list(map(int, input.split()))
+
     if get_majority_element_linear(a, 0, n) != -1:
         print(1)
     else:
