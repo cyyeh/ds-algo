@@ -4,9 +4,20 @@ import sys
 
 
 def number_of_components(adj):
-    result = 0
-    #write your code here
-    return result
+    def explore(v):
+        visited[v] = True
+        for w in adj[v]:
+            if not visited[w]:
+                explore(w)
+
+    visited = [False for _ in range(len(adj))]
+    components_count = 0
+    for v in range(len(adj)):
+        if not visited[v]:
+            explore(v)
+            components_count += 1
+
+    return components_count
 
 if __name__ == '__main__':
     input = sys.stdin.read()
