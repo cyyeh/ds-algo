@@ -4,7 +4,26 @@ import sys
 
 
 def acyclic(adj):
-    return 0
+    def explore(v):
+        visited[v] = True
+        if adj[v]:
+            for w in adj[v]:
+                if not visited[w]:
+                    vertices.append(w)
+                    explore(w)
+        else:
+            vertices.append(v)
+
+    vertices = []
+    visited = [False for _ in range(len(adj))]
+
+    for v in range(len(adj)):
+        if not visited[v]:
+            explore(v)    
+
+    print(vertices)
+
+    return 0 if len(vertices) + 1 == len(adj) else 1
 
 if __name__ == '__main__':
     input = sys.stdin.read()

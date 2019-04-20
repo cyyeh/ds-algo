@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='ios' display-mode='rendered'>
+    <pages>
+        <page name='Swift Syntax Review'/>
+        <page name='List-Based Collections'/>
+        <page name='Searching and Sorting'/>
+        <page name='Maps and Hashing'/>
+        <page name='Trees'/>
+        <page name='Graphs'/>
+    </pages>
+</playground>
